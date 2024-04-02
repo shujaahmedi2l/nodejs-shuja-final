@@ -1,0 +1,16 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "nodejs-shuja-final"
+  description: "nothing"
+  annotations:
+    github.com/project-slug: "shujaahmedi2l/nodejs-shuja-final"
+    argocd/app-name: "nodejs-shuja-final"
+  links:
+    - url: https://shuja-final.onexidp.com
+      title: Web Application
+      icon: LaunchIcon
+spec:
+  type: service
+  owner: guests
+  lifecycle: experimental
