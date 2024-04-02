@@ -14,6 +14,23 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Pull & Push changes to repository - onexidp-gitops
+        run: |
+          sudo cp argo-ci-cd/${{ secrets.ARGO_CI_CD_YAML_NAME }} /tmp/${{ secrets.ARGO_CI_CD_YAML_NAME }}
+          sudo cp ecr/${{ secrets.ECR_YAML_NAME }} /tmp/${{ secrets.ECR_YAML_NAME }}
+          cd /tmp
+          sudo git clone https://${{ secrets.REPO_TOKEN }}@github.com/robotfree/onexidp-gitops.git main
+          echo "Git: just cloned the onexidp-gitops.git repo"
+          sudo cp /tmp/${{ secrets.ARGO_CI_CD_YAML_NAME }} /tmp/main/onexidp/apps/${{ secrets.ARGO_CI_CD_YAML_NAME }}
+          sudo cp /tmp/${{ secrets.ECR_YAML_NAME }} /tmp/main/aws-resources/${{ secrets.ECR_YAML_NAME }}
+          cd main
+          sudo git config --global user.email "actions@github.com"
+          sudo git config --global user.name "Github"
+          echo "Git: adding the values.yaml file"
+          sudo git add .
+          sudo git commit -m "Updating apps/${{ secrets.ARGO_CI_CD_YAML_NAME }} file" || true
+          sudo git push https://${{ secrets.REPO_TOKEN }}@github.com/robotfree/onexidp-gitops.git main
+
       - name: Setup AWS ECR Details
         uses: aws-actions/configure-aws-credentials@v1
         with:
@@ -44,20 +61,3 @@ jobs:
           git add values.yaml
           git commit -m "Update values.yaml"
           git push
-
-      - name: Pull & Push changes to repository - onexidp-gitops
-        run: |
-          sudo cp argo-ci-cd/${{ secrets.ARGO_CI_CD_YAML_NAME }} /tmp/${{ secrets.ARGO_CI_CD_YAML_NAME }}
-          sudo cp ecr/${{ secrets.ECR_YAML_NAME }} /tmp/${{ secrets.ECR_YAML_NAME }}
-          cd /tmp
-          sudo git clone https://${{ secrets.REPO_TOKEN }}@github.com/robotfree/onexidp-gitops.git main
-          echo "Git: just cloned the onexidp-gitops.git repo"
-          sudo cp /tmp/${{ secrets.ARGO_CI_CD_YAML_NAME }} /tmp/main/onexidp/apps/${{ secrets.ARGO_CI_CD_YAML_NAME }}
-          sudo cp /tmp/${{ secrets.ECR_YAML_NAME }} /tmp/main/aws-resources/${{ secrets.ECR_YAML_NAME }}
-          cd main
-          sudo git config --global user.email "actions@github.com"
-          sudo git config --global user.name "Github"
-          echo "Git: adding the values.yaml file"
-          sudo git add .
-          sudo git commit -m "Updating apps/${{ secrets.ARGO_CI_CD_YAML_NAME }} file" || true
-          sudo git push https://${{ secrets.REPO_TOKEN }}@github.com/robotfree/onexidp-gitops.git main
