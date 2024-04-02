@@ -2,7 +2,7 @@ replicaCount: 3
 
 image:
   repository: 696960135893.dkr.ecr.eu-west-1.amazonaws.com/nodejs-shuja-final
-  tag: e54016cd434aa2709862bde07543a30495890d87
+  tag: fd825eb5cf0b0c7bcbd0b15e6fd83dc6a3693481
   pullPolicy: Always
 
 service:
