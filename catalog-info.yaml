@@ -6,7 +6,7 @@ metadata:
   annotations:
     github.com/project-slug: "shujaahmedi2l/nodejs-shuja-final"
     argocd/app-name: "nodejs-shuja-final"
-    grafana/overview-dashboard: "https://grafana.onexidp.com/d/o6-BGgnnk/loki-kubernetes-logs?orgId=1"
+    grafana/dashboard-selector: "(url == 'https://grafana.onexidp.com/d/o6-BGgnnk/loki-kubernetes-logs?orgId=1')"
   links:
     - url: https://shuja-final.onexidp.com
       title: Web Application
